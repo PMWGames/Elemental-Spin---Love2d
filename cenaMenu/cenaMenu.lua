@@ -1,7 +1,7 @@
 
 
 function cenaMenu_load()
-    fundo = love.graphics.newImage("background.png")
+    fundo = love.graphics.newImage("cenaMenu/backgroud.png")
 end
 
 function cenaMenu_update(dt)
