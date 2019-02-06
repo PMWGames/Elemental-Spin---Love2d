@@ -1,12 +1,13 @@
 
-function love.load()
+
+function cenaMenu_load()
     fundo = love.graphics.newImage("background.png")
 end
 
-function love.update(dt)
+function cenaMenu_update(dt)
 
 end
 
-function love.draw()
-    love.graphics.draw(fundo, 100, 100)
+function cenaMenu_draw()
+    love.graphics.draw(fundo, 0, 0)
 end
