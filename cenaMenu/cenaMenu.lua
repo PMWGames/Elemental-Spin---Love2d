@@ -3,6 +3,11 @@ require "libs/gooiComponents"
 
 function cenaMenu_load()
 
+    fundo = love.graphics.newImage("cenaMenu/background.png")
+
+    logo = love.graphics.newImage("cenaMenu/dragon.png")
+
+
     --fonte do texto dos botões
     style = {
         font = love.graphics.newFont("fonts/Arimo-Bold.ttf", love.graphics.getWidth() / 26),
@@ -10,11 +15,6 @@ function cenaMenu_load()
         bgColor = {0.208, 0.220, 0.222}
     }
     gooi.setStyle(style)
-
-    fundo = love.graphics.newImage("cenaMenu/background.png")
-
-    logo = love.graphics.newImage("cenaMenu/dragon.png")
-
 
     --botão iniciar
     btn_iniciar_w = love.graphics.getWidth() / 5;
