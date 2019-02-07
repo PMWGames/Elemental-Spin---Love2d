@@ -18,6 +18,16 @@ function flameAnim.new(image_path)
     self.dir = 1
     self.ang = 0
     self.end_loop = false
+    self.world = nil
+
+    self.body = {}
+    self.body.x = 0
+    self.body.y = 0
+    self.body.body = nil
+    self.body.mass = 0
+    self.body.shape = nil
+    self.body.fixture = nil
+    self.body.fixtName = image_path
 
     return self
 
@@ -57,6 +67,12 @@ end
 
 function flameAnim.update(self, dt)
     
+    if(self.world ~= nil) then
+        self.body.x = self.x
+        self.body.y = self.y
+        self.world:update(dt)
+    end
+
     if (self.end_loop == false) then
 
         self.id = self.id + (self.speed_frames * dt)
@@ -81,7 +97,15 @@ end
 
 function flameAnim.setPosXY(self, x, y)
     self.x = x
-    self.y = y
+    self.y = y  
+end
+
+function flameAnim.setPosX(self, x)
+    self.x = x
+end
+
+function flameAnim.setPosY(self, y)
+
 end
 
 function flameAnim.getX(self)
@@ -131,6 +155,45 @@ end
 
 function flameAnim.getAngle(self)
     return self.ang
+end
+
+--[[
+
+    self.body = {}
+    self.body.body = nil
+    self.body.mass = 0
+    self.body.shape = nil
+    self.body.fixture = nil
+    self.body.fixtName = image_path
+
+]]--
+
+function flameAnim.addColision(self, world, mass, shape, collideType, restitution)
+
+    self.world = world
+
+    self.body.body = love.physics.newBody(world, self.x, self.y, collideType)
+    self.body.body:setMass(mass)
+
+    if(shape > 0)then
+        self.body.shape = love.physics.newCircleShape(shape)
+    else
+        self.body.shape = love.physics.newRectangleShape(list_frames[1]:getwidth * self.w, 
+                                                            list_frames[1]:getHeight * self.h)
+    end 
+
+    self.body.fixture = love.physics.newFixture(self.body.body, self.body.shape)
+    self.body.fixture:setRestitution(restitution)
+    self.body.fixture:setUserData(self.body.fixtName)
+    
+end
+
+function flameAnim.setWorld(self, world)
+    self.world = world
+end
+
+function flameAnim.getCurrentWorld(self, world)
+    self.world = world
 end
 
 
