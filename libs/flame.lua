@@ -30,11 +30,3 @@ function flame_getPositionScreenPercentY(percent)
     return tam_y * percent / 100;
 
 end
-
-
-
---[[
-1   = 3
-50  = 2
-100 = 1
-]]--

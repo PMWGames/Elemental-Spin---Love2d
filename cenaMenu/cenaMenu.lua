@@ -1,5 +1,5 @@
 require "libs/flame"
-require "libs/gooiComponents"
+require "libs/flameAnim"
 
 function cenaMenu_load()
 
@@ -8,37 +8,17 @@ function cenaMenu_load()
     logo = love.graphics.newImage("cenaMenu/dragon.png")
 
 
-    --fonte do texto dos botões
-    style = {
-        font = love.graphics.newFont("fonts/Arimo-Bold.ttf", love.graphics.getWidth() / 26),
-        showBorder = true,
-        bgColor = {0.208, 0.220, 0.222}
-    }
-    gooi.setStyle(style)
-
-    --botão iniciar
-    btn_iniciar_w = love.graphics.getWidth() / 5;
-    btn_iniciar_h = love.graphics.getHeight() / 14;
-    btn_iniciar_x = love.graphics.getWidth() / 2.35;
-    btn_iniciar_y = love.graphics.getHeight() / 1.4;
-    btn_iniciar = gooi.newButton({text = "Iniciar", x = btn_iniciar_x, y = btn_iniciar_y, 
-                                    w = btn_iniciar_w, h = btn_iniciar_h}):onRelease(function()
-        --love.event.quit()
-    end):success()
-
-    --botão sair
-    btn_sair_w = love.graphics.getWidth() / 5;
-    btn_sair_h = love.graphics.getHeight() / 14;
-    btn_sair_x = love.graphics.getWidth() / 2.35;
-    btn_sair_y = love.graphics.getHeight() / 1.2;
-    btn_sair = gooi.newButton({text = "Sair", x = btn_sair_x, y = btn_sair_y, 
-                                w = btn_sair_w, h = btn_sair_h}):onRelease(function()
-        love.event.quit()
-    end):danger()
+    --Botão play (lib flameAnim que criei)
+    btn_play = flameAnim.new("cenaMenu/play_button.png") --instancia da imagem que será animada, passando o path da imagem
+    btn_play:createAnim(5, 5, 25, 22)                    --define qtd rows, qtd cols, ultimo sprite, velocidade animação
+    btn_play:setPosXY(500, 2200)                          --define posição na tela em pixels
+    btn_play:setSizeScale(0.25, 0.2)                      --define tamanho em escala
 
 end
 
 function cenaMenu_update(dt)
+
+    btn_play:update(dt)
 
 end
 
@@ -48,15 +28,14 @@ function cenaMenu_draw()
 
     flame_drawImageScreenPercent(logo, 60, 40, 12)
 
-
-    gooi.draw()
+    btn_play:anim()
 
 end
 
 function cenaMenu_mousepressed(x, y, button)  
-    gooi.pressed() 
+    
 end
 
 function cenaMenu_mousereleased(x, y, button) 
-    gooi.released() 
+    
 end

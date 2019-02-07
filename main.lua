@@ -1,5 +1,5 @@
 require "cenaMenu/cenaMenu"
-
+require "libs/flameAnim"
 
 function love.load()
 
