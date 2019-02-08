@@ -178,8 +178,7 @@ function flameAnim.addColision(self, world, mass, shape, collideType, restitutio
     if(shape > 0)then
         self.body.shape = love.physics.newCircleShape(shape)
     else
-        self.body.shape = love.physics.newRectangleShape(list_frames[1]:getwidth * self.w, 
-                                                            list_frames[1]:getHeight * self.h)
+        self.body.shape = love.physics.newRectangleShape((self.w), (self.h))
     end 
 
     self.body.fixture = love.physics.newFixture(self.body.body, self.body.shape)
