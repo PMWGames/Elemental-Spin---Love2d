@@ -11,8 +11,8 @@ function cenaMenu_load()
     --Botão play (lib flameAnim que criei)
     btn_play = flameAnim.new("cenaMenu/play_button.png") --instancia da imagem que será animada, passando o path da imagem
     btn_play:createAnim(5, 5, 25, 22)                    --define qtd rows, qtd cols, ultimo sprite, velocidade animação
-    btn_play:setPosXY(500, 2200)                          --define posição na tela em pixels
-    btn_play:setSizeScale(0.25, 0.2)                      --define tamanho em escala
+    btn_play:setPosXYPercent(50, 80)                          --define posição na tela em pixels
+    btn_play:setSizePercent(30)                      --define tamanho em escala
 
 end
 

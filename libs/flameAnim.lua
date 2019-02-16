@@ -1,3 +1,5 @@
+require "libs/flame"
+
 flameAnim = {}
 flameAnim.__index = flameAnim
 
@@ -8,26 +10,20 @@ function flameAnim.new(image_path)
     self.image = love.graphics.newImage(image_path);
     self.x = 0
     self.y = 0
-    self.width = 1
-    self.height = 1
+    self.xPercent = 0
+    self.yPercent = 0
+    self.scaleWidth = 1
+    self.scaleHeight = 1
+    self.sizePercent = 0
     self.speed_frames = 0
     self.last_spt = 0
     self.list_frames = {}
     self.isLoop = true
     self.id = 1
-    self.dir = 1
-    self.ang = 0
+    self.direction = 1
+    self.angle = 0
     self.end_loop = false
     self.world = nil
-
-    self.body = {}
-    self.body.x = 0
-    self.body.y = 0
-    self.body.body = nil
-    self.body.mass = 0
-    self.body.shape = nil
-    self.body.fixture = nil
-    self.body.fixtName = image_path
 
     return self
 
@@ -62,7 +58,8 @@ function flameAnim.createAnim(self, rows, cols, last_sprite, speed)
     self.list_frames = sprites_arr
     self.speed_frames = speed
     self.last_spt = last_sprite
-
+    self.absoluteWidth = qX
+    self.absoluteHeight = qY
 end
 
 function flameAnim.update(self, dt)
@@ -89,9 +86,14 @@ function flameAnim.anim(self)
             self.end_loop = true
         end
     end
+
     local i = math.floor(self.id)
-    love.graphics.scale(self.w, self.h)
-    love.graphics.draw(self.list_frames[0], self.list_frames[i], self.x, self.y, self.ang, self.dir)
+
+    --love.graphics.scale(self.scaleWidth, self.scaleHeight)
+
+    flame_drawAnimScreenPercent(self.list_frames, self.sizePercent, self.absoluteWidth, self.absoluteHeight, self.xPercent, self.yPercent, i)
+
+    --love.graphics.draw(self.list_frames[0], self.list_frames[i], self.x, self.y, self.angle, self.direction)
     love.graphics.scale(1,1)
 end
 
@@ -100,12 +102,17 @@ function flameAnim.setPosXY(self, x, y)
     self.y = y  
 end
 
+function flameAnim.setPosXYPercent(self, x, y)
+    self.xPercent = x
+    self.yPercent = y  
+end
+
 function flameAnim.setPosX(self, x)
     self.x = x
 end
 
 function flameAnim.setPosY(self, y)
-
+    self.y = y
 end
 
 function flameAnim.getX(self)
@@ -116,17 +123,21 @@ function flameAnim.getY(self)
     return self.y
 end
 
+function flameAnim.setSizePercent(self, percent)
+    self.sizePercent = percent
+end
+
 function flameAnim.setSizeScale(self, width, height)
-    self.w = width
-    self.h = height
+    self.scaleWidth = width
+    self.scaleHeight = height
 end
 
 function flameAnim.getwidthScale(self)
-    return self.w
+    return self.scaleWidth
 end
 
 function flameAnim.getHeightScale(self)
-    return self.h
+    return self.scaleHeight
 end
 
 function flameAnim.setLoop(self, loop)
@@ -142,50 +153,21 @@ function flameAnim.getCurrentSprite(self)
 end
 
 function flameAnim.setDirection(self, direction)
-    self.dir = direction
+    self.direction = direction
 end
 
 function flameAnim.getDirection(self)
-    return self.dir
+    return self.direction
 end
 
 function flameAnim.setAngle(self, angle)
-    self.ang = angle
+    self.angle = angle
 end
 
 function flameAnim.getAngle(self)
-    return self.ang
+    return self.angle
 end
 
---[[
-
-    self.body = {}
-    self.body.body = nil
-    self.body.mass = 0
-    self.body.shape = nil
-    self.body.fixture = nil
-    self.body.fixtName = image_path
-
-]]--
-
-function flameAnim.addColision(self, world, mass, shape, collideType, restitution)
-
-    self.world = world
-
-    self.body.body = love.physics.newBody(world, self.x, self.y, collideType)
-    self.body.body:setMass(mass)
-
-    if(shape > 0)then
-        self.body.shape = love.physics.newCircleShape(shape)
-    else
-        self.body.shape = love.physics.newRectangleShape((self.w), (self.h))
-    end 
-
-    self.body.fixture = love.physics.newFixture(self.body.body, self.body.shape)
-    self.body.fixture:setRestitution(restitution)
-    self.body.fixture:setUserData(self.body.fixtName)
-    
-end
 
 function flameAnim.setWorld(self, world)
     self.world = world
