@@ -3,9 +3,9 @@ require "libs/flameAnim"
 
 function cenaMenu_load()
 
-    fundo = love.graphics.newImage("cenaMenu/background.png")
+    fundo_menu = love.graphics.newImage("cenaMenu/background.png")
 
-    logo = love.graphics.newImage("cenaMenu/dragon.png")
+    logo_menu = love.graphics.newImage("cenaMenu/dragon.png")
 
 
     --Botão play (lib flameAnim que criei)
@@ -24,9 +24,9 @@ end
 
 function cenaMenu_draw()
 
-    flame_drawImageScreenPercent(fundo, 101, -1, -1)
+    flame_drawImageScreenPercent(fundo_menu, 101, -1, -1)
 
-    flame_drawImageScreenPercent(logo, 60, 40, 12)
+    flame_drawImageScreenPercent(logo_menu, 60, 40, 12)
 
     btn_play:anim()
 
